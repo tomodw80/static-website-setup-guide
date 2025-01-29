@@ -1,0 +1,208 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #2c3e50;
+    color: #ecf0f1;
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    background: #1abc9c;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(233, 217, 3);
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    gap: 20px;
+}
+
+aside {
+    width: 250px;
+    background: #34495e;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+aside h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+aside ul {
+    list-style: none;
+    padding: 0;
+}
+
+aside ul li {
+    margin: 10px 0;
+}
+
+aside ul li a {
+    color: #1abc9c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    flex-grow: 1;
+    background: #3b3b3b;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+h1, h2, h3 {
+    color: #1abc9c;
+    html {
+        scroll-behavior: smooth;
+    }
+    aside ul li a {
+        color: #1abc9c;
+        text-decoration: none;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    
+    aside ul li a.active {
+        color: #ecf0f1;
+        background: #1abc9c;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+ /* Default hidden state for animations */
+.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* When element is in view, fade it in */
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+nav {
+    background: #1abc9c;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    transform: translateY(-100%);
+    animation: slideIn 0.6s ease-out forwards;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+aside ul li a {
+    display: block;
+    padding: 10px;
+    color: #1abc9c;
+    text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.2s, color 0.3s;
+}
+
+aside ul li a:hover {
+    color: #ecf0f1;
+    transform: scale(1.1);
+}
+/* Floating Action Button */
+#scrollTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: #1abc9c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s, transform 0.3s;
+    display: none; /* Hidden by default */
+}
+
+/* Hover effect */
+#scrollTopBtn:hover {
+    background: #16a085;
+    transform: scale(1.1);
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.bounce {
+    animation: bounce 1s infinite;
+}
+/* Dark Mode Button */
+#darkModeToggle {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    margin-left: 20px;
+    transition: transform 0.3s;
+}
+
+#darkModeToggle:hover {
+    transform: scale(1.2);
+}
+
+/* Default Light Mode */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    transition: background 0.5s, color 0.5s;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+    background: #121212;
+    color: #ffffff;
+}
+
+/* Change elements in dark mode */
+.dark-mode nav {
+    background: #222;
+}
+
+.dark-mode aside {
+    background: #333;
+}
+
+.dark-mode main {
+    background: #1e1e1e;
+}
+
+.dark-mode a {
+    color: #1abc9c;
+}
+
+/* Floating Action Button Dark Mode */
+.dark-mode #scrollTopBtn {
+    background: #16a085;
+}
+   
+}

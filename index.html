@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Website Setup Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <nav>
+        <h1>🚀 Static Website Guide</h1>
+         <button id="darkModeToggle">🌙</button>
+    </nav>
+    <div class="container">
+        <aside>
+            <h2>📌 Steps</h2>
+            <ul>
+                <li><a href="#Step 1: Prepare Your Static Website Files">Step 1: Prepare Files</a></li>
+                <li><a href="#Step 2: Create an S3 Bucket">Step 2: Create S3 Bucket</a></li>
+                <li><a href="#Step 3: Upload Your Website Files to S3">Step 3: Upload Files</a></li>
+                <li><a href="#Step 4: Enable Static Website Hosting on S3">Step 4: Enable Hosting</a></li>
+                <li><a href="#Step 5: Set Up Amazon CloudFront">Step 5: Set Up CloudFront</a></li>
+                <li><a href="#Step 6: Configure Route 53 for DNS">Step 6: Configure Route 53</a></li>
+                <li><a href="#Step 7: Test Your Website">Step 7: Test Your Website</a></li>
+            </ul>
+        </aside>
+        <main>
+            <p>Building a static website on Amazon S3, distributing it using Amazon CloudFront, and managing DNS with Amazon Route 53. </p>
+<hr />
+<h3 id="<strong>Step 1: Prepare Your Static Website Files</strong>"><strong>Step 1: Prepare Your Static Website Files</strong></h3>
+<ol>
+<li>
+<p><strong>Create your website files</strong>: Ensure your static website files (HTML, CSS, JavaScript, images, etc.) are ready and organized in a folder. </p>
+</li>
+<li>
+<p><strong>Test locally</strong>: Open your <code>index.html</code> file in a browser to ensure it works as expected. </p>
+</li>
+</ol>
+<hr />
+<h3 id="<strong>Step 2: Create an S3 Bucket</strong>"><strong>Step 2: Create an S3 Bucket</strong></h3>
+<ol>
+<li>
+<p><strong>Log in to AWS Management Console</strong>: Go to <a href="https://aws.amazon.com/">https://aws.amazon.com/</a> and sign in. </p>
+</li>
+<li>
+<p><strong>Open S3 Console</strong>: Search for "S3" in the AWS Management Console and open the S3 service. </p>
+</li>
+<li>
+<p><strong>Create a Bucket</strong>: </p>
+</li>
+<li>
+<p>Click <strong>Create bucket</strong>. </p>
+</li>
+<li>
+<p>Enter a unique <strong>Bucket name</strong> (e.g., <code>my-static-website</code>). </p>
+</li>
+<li>
+<p>Choose the <strong>Region</strong> closest to your audience. </p>
+</li>
+<li>
+<p>Leave other settings as default and click <strong>Create bucket</strong>. </p>
+</li>
+</ol>
+<hr />
+<h3 id="<strong>Step 3: Upload Your Website Files to S3</strong>"><strong>Step 3: Upload Your Website Files to S3</strong></h3>
+<ol>
+<li>
+<p><strong>Select your bucket</strong>: Click on the bucket you just created. </p>
+</li>
+<li>
+<p><strong>Upload files</strong>: </p>
+</li>
+<li>
+<p>Click <strong>Upload</strong>. </p>
+</li>
+<li>
+<p>Add your website files (e.g., <code>index.html</code>, <code>styles.css</code>, etc.). </p>
+</li>
+<li>
+<p>Click <strong>Upload</strong>. </p>
+</li>
+<li>
+<p><strong>Set permissions</strong>: </p>
+</li>
+<li>
+<p>After uploading, select all files, click <strong>Actions</strong>, and choose <strong>Make public</strong>. </p>
+</li>
+<li>
+<p>Confirm by typing "make public" in the dialog box. </p>
+</li>
+</ol>
+<hr />
+<h3 id="<strong>Step 4: Enable Static Website Hosting on S3</strong>"><strong>Step 4: Enable Static Website Hosting on S3</strong></h3>
+<ol>
+<li>
+<p><strong>Go to Properties</strong>: In your S3 bucket, click the <strong>Properties</strong> tab. </p>
+</li>
+<li>
+<p><strong>Enable static website hosting</strong>: </p>
+</li>
+<li>
+<p>Scroll down to <strong>Static website hosting</strong> and click <strong>Edit</strong>. </p>
+</li>
+<li>
+<p>Select <strong>Enable</strong>. </p>
+</li>
+<li>
+<p>Set <code>index.html</code> as the <strong>Index document</strong>. </p>
+</li>
+<li>
+<p>Optionally, set an error document (e.g., <code>error.html</code>). </p>
+</li>
+<li>
+<p>Click <strong>Save changes</strong>. </p>
+</li>
+<li>
+<p><strong>Note the endpoint URL</strong>: Under <strong>Static website hosting</strong>, you’ll see a URL (e.g., <code>http://my-static-website.s3-website-us-east-1.amazonaws.com</code>). This is your website URL. </p>
+</li>
+</ol>
+<hr />
+<h3 id="<strong>Step 5: Set Up Amazon CloudFront</strong>"><strong>Step 5: Set Up Amazon CloudFront</strong></h3>
+<ol>
+<li>
+<p><strong>Open CloudFront Console</strong>: Search for "CloudFront" in the AWS Management Console and open the service. </p>
+</li>
+<li>
+<p><strong>Create a Distribution</strong>: </p>
+</li>
+<li>
+<p>Click <strong>Create distribution</strong>. </p>
+</li>
+<li>
+<p>Under <strong>Origin domain</strong>, select your S3 bucket (e.g., <code>my-static-website.s3.amazonaws.com</code>). </p>
+</li>
+<li>
+<p>Leave other settings as default. </p>
+</li>
+<li>
+<p>Scroll down to <strong>Default cache behavior</strong> and ensure <strong>Viewer protocol policy</strong> is set to <strong>Redirect HTTP to HTTPS</strong>. </p>
+</li>
+<li>
+<p>Click <strong>Create distribution</strong>. </p>
+</li>
+<li>
+<p><strong>Wait for deployment</strong>: It may take a few minutes for the CloudFront distribution to deploy. Note the <strong>Domain name</strong> (e.g., <code>d12345.cloudfront.net</code>). </p>
+</li>
+</ol>
+<hr />
+<h3 id="<strong>Step 6: Configure Route 53 for DNS</strong>"><strong>Step 6: Configure Route 53 for DNS</strong></h3>
+<ol>
+<li>
+<p><strong>Open Route 53 Console</strong>: Search for "Route 53" in the AWS Management Console and open the service. </p>
+</li>
+<li>
+<p><strong>Register a Domain (if needed)</strong>: </p>
+</li>
+<li>
+<p>If you don’t have a domain, go to <strong>Registered domains</strong> and click <strong>Register domain</strong>. </p>
+</li>
+<li>
+<p>Follow the steps to register a new domain. </p>
+</li>
+<li>
+<p><strong>Create a Hosted Zone</strong>: </p>
+</li>
+<li>
+<p>Go to <strong>Hosted zones</strong>. </p>
+</li>
+<li>
+<p>Click <strong>Create hosted zone</strong>. </p>
+</li>
+<li>
+<p>Enter your domain name (e.g., <code>example.com</code>) and click <strong>Create</strong>. </p>
+</li>
+<li>
+<p><strong>Create a Record Set</strong>: </p>
+</li>
+<li>
+<p>In your hosted zone, click <strong>Create record</strong>. </p>
+</li>
+<li>
+<p>Choose <strong>Simple routing</strong> and click <strong>Next</strong>. </p>
+</li>
+<li>
+<p>Click <strong>Define simple record</strong>. </p>
+</li>
+<li>
+<p>Leave the <strong>Record name</strong> blank (for the root domain) or enter a subdomain (e.g., <code>www</code>). </p>
+</li>
+<li>
+<p>Set <strong>Record type</strong> to <code>A – Routes traffic to an IPv4 address</code>. </p>
+</li>
+<li>
+<p>Enable <strong>Alias</strong> and select your CloudFront distribution from the dropdown. </p>
+</li>
+<li>
+<p>Click <strong>Create records</strong>. </p>
+</li>
+</ol>
+<hr />
+<h3 id="<strong>Step 7: Test Your Website</strong>"><strong>Step 7: Test Your Website</strong></h3>
+<ol>
+<li>
+<p><strong>Wait for DNS propagation</strong>: It may take a few minutes for DNS changes to propagate. </p>
+</li>
+<li>
+<p><strong>Visit your website</strong>: Open your browser and navigate to your domain (e.g., <code>http://example.com</code> or <code>http://www.example.com</code>). </p>
+</li>
+<li>
+<p><strong>Verify HTTPS</strong>: Ensure your website loads over HTTPS (e.g., <code>https://example.com</code>). </p>
+</li>
+</ol>
+<hr />
+<h3 id="<strong>Optional: Configure a Custom SSL Certificate</strong>"><strong>Optional: Configure a Custom SSL Certificate</strong></h3>
+<ol>
+<li>
+<p><strong>Request a Certificate</strong>: </p>
+</li>
+<li>
+<p>Open <strong>AWS Certificate Manager (ACM)</strong>. </p>
+</li>
+<li>
+<p>Click <strong>Request a certificate</strong>. </p>
+</li>
+<li>
+<p>Enter your domain name (e.g., <code>example.com</code> and <code>*.example.com</code> for wildcard). </p>
+</li>
+<li>
+<p>Follow the steps to validate the certificate using DNS. </p>
+</li>
+<li>
+<p><strong>Update CloudFront Distribution</strong>: </p>
+</li>
+<li>
+<p>Go back to your CloudFront distribution. </p>
+</li>
+<li>
+<p>Click <strong>Edit</strong> under <strong>General</strong>. </p>
+</li>
+<li>
+<p>Set <strong>Custom SSL certificate</strong> to the certificate you just created. </p>
+</li>
+<li>
+<p>Save changes. </p>
+</li>
+</ol>
+<hr />
+<h3 id="<strong>Done!</strong>"><strong>Done!</strong></h3>
+<p>Your static website is now hosted on Amazon S3, distributed via CloudFront, and accessible via your custom domain using Route 53. Let me know if you need further assistance! </p>
+        </main>
+    </div>
+    
+    <!-- Floating Action Button -->
+    <button id="scrollTopBtn" title="Go to Top">⬆️</button>
+
+</body>
+</html>
